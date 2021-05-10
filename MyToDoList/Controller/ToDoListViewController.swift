@@ -11,29 +11,17 @@ class ToDoListViewController: UITableViewController {
     
     var itemArray = [Item]()
     
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Item.plist")
+    
     let userDefaulf = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let newItem = Item()
-        newItem.title = "helllllll"
-        itemArray.append(newItem)
-        
-        let newItem1 = Item()
-        newItem1.title = "heloooooo"
-        itemArray.append(newItem1)
-        
-        let newItem2 = Item()
-        newItem2.title = "heliiiiii"
-        itemArray.append(newItem2)
-                
-        if let items = userDefaulf.array(forKey: "ToDoListArray") as? [Item] {
-            itemArray = items
-        }
+    
+        loadItems()
     }
     
-//MARK - tableView Datasource methods
+    //MARK - tableView Datasource methods
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -44,7 +32,7 @@ class ToDoListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoitemCell", for: indexPath)
-
+        
         cell.textLabel?.text = itemArray[indexPath.row].title
         
         cell.accessoryType = itemArray[indexPath.row].done ? .checkmark : .none
@@ -52,10 +40,10 @@ class ToDoListViewController: UITableViewController {
         return cell
     }
     
-//MARK - tableView delegate methods
+    //MARK - tableView delegate methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    
+        
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -64,7 +52,7 @@ class ToDoListViewController: UITableViewController {
     }
     
     
-//MARK - Bar Button Item (Add New Item)
+    //MARK - Bar Button Item (Add New Item)
     
     
     
@@ -72,7 +60,7 @@ class ToDoListViewController: UITableViewController {
         
         var textField = UITextField()
         let alert = UIAlertController(title: "Add New ToDo Item", message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "add item", style: .default) { (action) in
+        let action = UIAlertAction(title: "add item", style: .default) { [self] (action) in
             
             //what while happen after user tap on the add button
             
@@ -80,8 +68,7 @@ class ToDoListViewController: UITableViewController {
             newItem.title = textField.text!
             self.itemArray.append(newItem)
             
-            self.userDefaulf.setValue(self.itemArray, forKey: "ToDoListArray")
-            self.tableView.reloadData()
+            self.saveItems()
         }
         
         alert.addTextField { (alertTextField) in
@@ -91,6 +78,34 @@ class ToDoListViewController: UITableViewController {
         
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
+    }
+    
+    func saveItems(){
+        
+        let encoder = PropertyListEncoder()
+        do {
+            let data = try encoder.encode(self.itemArray)
+            try data.write(to: self.dataFilePath!)
+        }catch{
+            print("Error")
+        }
+        
+        self.tableView.reloadData()
+    }
+    
+    
+    func loadItems(){
+        
+        if let data = try? Data(contentsOf: dataFilePath!){
+            
+            let decoder = PropertyListDecoder()
+            
+            do{
+                itemArray = try decoder.decode([Item].self, from: data)
+            }catch{
+                print("Error")
+            }
+        }
     }
     
     
