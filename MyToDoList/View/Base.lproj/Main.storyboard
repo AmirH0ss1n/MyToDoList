@@ -8,7 +8,46 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--MyToDoList-->
+        <!--MyTodoList-->
+        <scene sceneID="keW-FU-itk">
+            <objects>
+                <tableViewController id="wp2-rv-2e5" customClass="CategoryTableViewController" customModule="MyToDoList" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="JX1-GR-wC6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="categoryItemCell" id="SWV-VU-HAT">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SWV-VU-HAT" id="ei0-QY-rTD">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="wp2-rv-2e5" id="gil-kM-xou"/>
+                            <outlet property="delegate" destination="wp2-rv-2e5" id="E9U-Jj-pLL"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="MyTodoList" id="l5X-9p-N1M" customClass="Ca">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="SnF-3M-SHP">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="addButton:" destination="wp2-rv-2e5" id="XMJ-mD-gp2"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="7HR-7R-b9H" kind="show" identifier="goToItems" id="Fcz-6D-vva"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1AT-YY-cir" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1087" y="65"/>
+        </scene>
+        <!--Items-->
         <scene sceneID="w8G-4v-qIc">
             <objects>
                 <tableViewController id="7HR-7R-b9H" customClass="ToDoListViewController" customModule="MyToDoList" customModuleProvider="target" sceneMemberID="viewController">
@@ -16,9 +55,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="gsm-eL-PQm">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="7HR-7R-b9H" id="vej-hy-3ke"/>
+                            </connections>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ToDoitemCell" id="sdk-J4-V5k">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="72" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sdk-J4-V5k" id="IFl-rf-ARf">
                                     <rect key="frame" x="0.0" y="0.0" width="383" height="43.5"/>
@@ -31,7 +78,7 @@
                             <outlet property="delegate" destination="7HR-7R-b9H" id="pZ2-C9-u2t"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="MyToDoList" id="70T-k8-Eiz">
+                    <navigationItem key="navigationItem" title="Items" id="70T-k8-Eiz">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="e2T-ge-PhV">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
@@ -42,7 +89,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lzo-cg-0EC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1116" y="65"/>
+            <point key="canvasLocation" x="1778" y="65"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mzn-Ue-uvG">
@@ -59,7 +106,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="7HR-7R-b9H" kind="relationship" relationship="rootViewController" id="1t4-iG-usv"/>
+                        <segue destination="wp2-rv-2e5" kind="relationship" relationship="rootViewController" id="cw0-ef-FGm"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="shc-j6-kTZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
